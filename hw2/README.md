@@ -33,4 +33,4 @@ mafft --auto all.fasta > ebola_align.fasta
 FastTree -gtr -boot 1000 -quote -nt ebola_align.fasta > ebola.newick
 ```
 ### Визуализация iTol:
-![]("tree_viz.svg")
+![alt text]("tree_viz.svg")
