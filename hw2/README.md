@@ -34,3 +34,34 @@ FastTree -gtr -boot 1000 -quote -nt ebola_align.fasta > ebola.newick
 ```
 ### Визуализация iTol:
 ![](tree_viz.svg)
+
+## Альтернативный пайплайн с MrBayes:
+Конвертируем FASTA в Nexus-формат с помощью seqmagick
+Установка:
+```
+conda create --name seqmagick python=3.10
+conda activate seqmagick
+pip install seqmagick
+```
+Использование:
+```
+seqmagick convert --output-format nexus --alphabet dna ebola_align.fasta ebola_align.nex
+```
+Форматируем ID сиквенсов для запуска MrBayes:
+```
+sed 's/lcl|//g' ebola_align.nex > formatted_align.nex
+```
+Устанавливаем MrBayes по инструкции на GitHub.
+Подбор параметров MrBayes:
+```
+execute formatted_align.nex
+outgroup KR534507.1_cds_AKG65094.1_1
+mcmcp ngen=1000000 nruns=2 nchains=2 samplefreq=200 burninfrac=0.2
+```
+Запуск MrBayes:
+```
+mcmc
+sump
+sumt
+```
+
